@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 justify">
+      <center>
+        <h1 class="mt-5">Bem-vindo {{user.name}} ao chat F5!</h1>
+      </center>
+    </div>
+  </div>
+  <div class="row mt-2 mb-2 justify-content-center">
+    <div class="dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Menu
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="/app/profile">Minhas Informações</a>
+        <a class="report dropdown-item">Relatório de Usuários</a>
+        <a class="logout dropdown-item" href="/app/logout">Logout</a>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-4 mb-4">
+    <div class="col-md-12 col-lg-6">
+      <div class="form">
+        <form method="POST" id="chat">
+          <span class="msg text-primary">Mensagens:</span>
+          <div class="messages form-control mt-2"></div>
+          <input type="hidden" name="username" value="{{user.name}}">
+          <div class="input-group">
+            <input type="text" name="message" placeholder="Digite aqui sua mensagem" class="form-control mt-2" required>
+            <div class="input-group-btn">
+              <button type="submit" class="send btn btn-primary mt-2"><i class="fas fa-paper-plane"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <textarea name="emails" id="emails" style="display: none;">{{#each emails}}{{email}}&#13;&#10;{{/each}}</textarea>
+  </div>
+</div>
+<script text="text/javascript">
+  var socket = io();
+
+  function renderMessage(message) {
+    $(".messages").append("<div class='message'><strong>" + message.sender + "</strong>: " + message.message + "</div>");
+  }
+
+  socket.on("receivedMessage", function (message) {
+    renderMessage(message);
+  });
+
+  socket.on("previousMessages", function (messages) {
+    $(".messages").empty();
+    for (message of messages) {
+      renderMessage(message);
+    }
+  });
+
+  $('#chat').submit(function (event) {
+    event.preventDefault();
+
+    var author = $('input[name=username]').val();
+    var message = $('input[name=message]').val();
+
+    if (author.length && message.length) {
+      var messageObject = {
+        message: message,
+        sender: author
+      };
+      $('input[name=message]').val("");
+      renderMessage(messageObject)
+      socket.emit("sendMessage", messageObject);
+    }
+  });
+
+  $('.report').click(function () {
+    var emails = $('textarea[name=emails]').val();
+    var blob = new Blob([emails], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, "relatorio-usuarios.txt");
+  })
+
+</script>

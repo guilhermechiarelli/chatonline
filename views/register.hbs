@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 justify">
+      <center>
+        <h1 class="mt-5">Cadastro</h1>
+        <p>Faça seu cadastro para ter acesso a plataforma.</p>
+      </center>
+    </div>
+  </div>
+  {{> _flash}}
+  <div class="row justify-content-center">
+    <div class="col-md-12 col-lg-6">
+      <div class="form">
+        <form action="/register" method="POST">
+          <input type="text" name="name" placeholder="Primeiro nome" class="form-control" required>
+          <input type="email" name="email" placeholder="E-mail" class="form-control mt-2" required>
+          <input type="text" name="city" placeholder="Cidade" class="form-control mt-2" required>
+          <input type="text" name="address" placeholder="Endereço" class="form-control mt-2" required>
+          <input type="text" name="cel" placeholder="Celular" id="txttelefone" class="form-control mt-2" maxlength="11"
+            required>
+          <input type="password" name="password" placeholder="Sua senha" class="form-control mt-2" required>
+          <button type="submit" class="btn btn-primary mt-4">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

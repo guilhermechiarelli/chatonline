@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 justify">
+      <center>
+        <h1 class="mt-5">Chat F5!</h1>
+        <p>Faça seu Login para acessar a plataforma ou <a href="/register">cadastre-se</a>.</p>
+      </center>
+    </div>
+  </div>
+  {{> _flash}}
+  <div class="row justify-content-center">
+    <div class="col-md-12 col-lg-6">
+      <div class="form">
+        <form action="/login" method="POST" id="login">
+          <input type="email" name="email" placeholder="Seu e-mail" class="form-control mt-2" required>
+          <input type="password" name="password" placeholder="Sua senha" class="form-control mt-2" required>
+          <button type="submit" class="btn btn-primary mt-4">Entrar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
