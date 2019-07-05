@@ -1,4 +1,4 @@
-Chat Online
+# Chat Online
 
 Aplicação desenvolvida para troca de mensagens simultâneas com autenticação e CRUD de usuários.
 
